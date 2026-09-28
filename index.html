@@ -630,36 +630,6 @@ button { font: inherit; color: inherit; }
       </ul>
       </div>
     </section>
-<section class="card" id="sec-microfonos" aria-labelledby="h-microfonos">
-      <header class="card-head">
-        <svg class="sc" aria-hidden="true"><use href="#cloud"></use></svg>
-        <h2 id="h-microfonos">Micrófonos</h2>
-      </header>
-      <div class="card-box">
-      <p class="sub mono">Voces</p>
-      <ul class="items">
-          <li class="item" data-id="sm58">
-            <span class="qty">2<small>×</small></span>
-            <span class="body"><span class="name">Shure SM58</span><span class="spec mono">Micrófono dinámico</span></span>
-          </li>
-      </ul>
-      </div>
-    </section>
-<section class="card" id="sec-accesorios" aria-labelledby="h-accesorios">
-      <header class="card-head">
-        <svg class="sc" aria-hidden="true"><use href="#cloud"></use></svg>
-        <h2 id="h-accesorios">Accesorios</h2>
-      </header>
-      <div class="card-box">
-      <p class="sub mono">Escenario</p>
-      <ul class="items">
-          <li class="item" data-id="pie-mic">
-            <span class="qty">2<small>×</small></span>
-            <span class="body"><span class="name">Pies de Mics</span></span>
-          </li>
-      </ul>
-      </div>
-    </section>
 <section class="card" id="sec-amplificacion" aria-labelledby="h-amplificacion">
       <header class="card-head">
         <svg class="sc" aria-hidden="true"><use href="#cloud"></use></svg>
@@ -717,6 +687,21 @@ button { font: inherit; color: inherit; }
       </ul>
       </div>
     </section>
+<section class="card" id="sec-microfonos" aria-labelledby="h-microfonos">
+      <header class="card-head">
+        <svg class="sc" aria-hidden="true"><use href="#cloud"></use></svg>
+        <h2 id="h-microfonos">Micrófonos</h2>
+      </header>
+      <div class="card-box">
+      <p class="sub mono">Voces</p>
+      <ul class="items">
+          <li class="item" data-id="sm58">
+            <span class="qty">2<small>×</small></span>
+            <span class="body"><span class="name">Shure SM58</span><span class="spec mono">Micrófono dinámico</span></span>
+          </li>
+      </ul>
+      </div>
+    </section>
 <section class="card" id="sec-luces" aria-labelledby="h-luces">
       <header class="card-head">
         <svg class="sc" aria-hidden="true"><use href="#cloud"></use></svg>
@@ -756,6 +741,21 @@ button { font: inherit; color: inherit; }
             <span class="qty">1<small>×</small></span>
             <span class="body"><span class="name">Consola de luces DMX Intimidator 2000</span></span>
             <span class="ph mono"><svg class="ic" aria-hidden="true"><use href="#i-image"></use></svg><span>2</span></span>
+          </li>
+      </ul>
+      </div>
+    </section>
+<section class="card" id="sec-accesorios" aria-labelledby="h-accesorios">
+      <header class="card-head">
+        <svg class="sc" aria-hidden="true"><use href="#cloud"></use></svg>
+        <h2 id="h-accesorios">Accesorios</h2>
+      </header>
+      <div class="card-box">
+      <p class="sub mono">Escenario</p>
+      <ul class="items">
+          <li class="item" data-id="pie-mic">
+            <span class="qty">2<small>×</small></span>
+            <span class="body"><span class="name">Pies de Mics</span></span>
           </li>
           <li class="item" data-id="estructura">
             <span class="qty">1<small>×</small></span>
@@ -856,12 +856,6 @@ const SECTIONS = [
     { id: 'gx5', qty: 1, name: 'Potencia QSC GX5', spec: 'Amplificador de potencia',
       photos: [['qsc-gx5-frente', 'Frente'], ['qsc-gx5-atras', 'Atrás'], ['qsc-gx5-lado', 'Lateral']] },
   ]},
-  { id: 'microfonos', col: 1, title: 'Micrófonos', sub: 'Voces', items: [
-    { id: 'sm58', qty: 2, name: 'Shure SM58', spec: 'Micrófono dinámico', photos: [] },
-  ]},
-  { id: 'accesorios', col: 1, title: 'Accesorios', sub: 'Escenario', items: [
-    { id: 'pie-mic', qty: 2, name: 'Pies de Mics', photos: [] },
-  ]},
   { id: 'amplificacion', col: 0, title: 'Amplificación y control', sub: 'Rack y mezcla', items: [
     { id: 'ca6', qty: 1, name: 'Crest CA6', spec: 'Amplificador de potencia', photos: [['crest-ca6', 'Frente'], ['crest-ca6-atras', 'Atrás']] },
     { id: 'ca4', qty: 1, name: 'Crest CA4', spec: 'Amplificador de potencia', photos: [['crest-ca4', 'Frente'], ['crest-ca4-atras', 'Atrás']] },
@@ -877,6 +871,9 @@ const SECTIONS = [
     { id: 'flx10', qty: 1, name: 'Pioneer DDJ-FLX10', spec: 'Controlador 4 canales',
       photos: [['flx10-arriba', 'Arriba'], ['flx10-frente', 'Frente'], ['flx10-lado', 'Lateral'], ['flx10-atras', 'Atrás']] },
   ]},
+  { id: 'microfonos', col: 0, title: 'Micrófonos', sub: 'Voces', items: [
+    { id: 'sm58', qty: 2, name: 'Shure SM58', spec: 'Micrófono dinámico', photos: [] },
+  ]},
   { id: 'luces', col: 1, title: 'Luces', sub: 'Iluminación DMX', items: [
     { id: 'bigdipper', qty: 8, name: 'Móviles Big Dipper', spec: 'Cabeza móvil · 150 watts', photos: [['bigdipper', 'Frente']] },
     { id: 'alfie', qty: 4, name: 'Móviles Alfie Mini Spot 2', spec: 'Cabeza móvil spot · 60 watts', photos: [['alfie-spot2', 'Frente'], ['alfie-spot2-atras', 'Atrás']] },
@@ -887,6 +884,9 @@ const SECTIONS = [
     { id: 'humo', qty: 1, name: 'Máquina de humo', photos: [] },
     { id: 'intimidator', qty: 1, name: 'Consola de luces DMX Intimidator 2000',
       photos: [['pilot2000-frente', 'Frente'], ['pilot2000-lado', 'Perspectiva']] },
+  ]},
+  { id: 'accesorios', col: 0, title: 'Accesorios', sub: 'Escenario', items: [
+    { id: 'pie-mic', qty: 2, name: 'Pies de Mics', photos: [] },
     { id: 'estructura', qty: 1, name: 'Estructura de colgado', photos: [] },
   ]},
 ];
