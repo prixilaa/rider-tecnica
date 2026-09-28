@@ -243,6 +243,19 @@ button { font: inherit; color: inherit; }
   padding: 16px 14px 8px;
   transition: background-color .3s, border-color .3s;
 }
+/* Aviso debajo de una sección (campo `note`): borde celeste, fondo celeste suave, etiqueta mono. */
+.card-note {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; align-items: baseline;
+  --note-fill: 11%; --note-line: 60%;
+  margin: 12px 0 0; padding: 16px 20px; border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--accent) var(--note-line), transparent);
+  background: color-mix(in srgb, var(--accent) var(--note-fill), transparent);
+  color: var(--ink-2); font-family: var(--sans); font-size: 14px; line-height: 1.55;
+}
+:root[data-theme="dark"] .card-note { --note-fill: 6%; --note-line: 50%; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .card-note { --note-fill: 6%; --note-line: 50%; } }
+.note-label { font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-strong); white-space: nowrap; }
+@media (max-width: 760px) { .card-note { grid-template-columns: 1fr; padding: 14px 16px; } }
 .card-box .sub { margin: 0 10px 4px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .card-head .sc { width: 22px; height: 12px; fill: var(--accent); flex: none; translate: 0 1px; }
 .card-head h2 { margin: 0; font-family: var(--display); font-size: 20px; font-weight: 700; line-height: 1.2; letter-spacing: -.005em; text-transform: none; }
@@ -686,6 +699,7 @@ button { font: inherit; color: inherit; }
           </li>
       </ul>
       </div>
+      <p class="card-note"><span class="note-label mono">⚠ Importante</span><span class="note-text">Todo el equipamiento del DJ Booth se encuentra montado en su respectivo anvil y no puede desarmarse ni retirarse de su estructura.</span></p>
     </section>
 <section class="card" id="sec-microfonos" aria-labelledby="h-microfonos">
       <header class="card-head">
@@ -864,7 +878,9 @@ const SECTIONS = [
     { id: 'dm3', qty: 1, name: 'Consola Yamaha DM3', spec: 'Consola digital',
       photos: [['yamaha-dm3', 'Frente'], ['yamaha-dm3-lado', 'Lateral'], ['yamaha-dm3-atras', 'Atrás']] },
   ]},
-  { id: 'dj', col: 0, title: 'DJ Booth', sub: 'Cabina', items: [
+  { id: 'dj', col: 0, title: 'DJ Booth', sub: 'Cabina',
+    note: ['Importante', 'Todo el equipamiento del DJ Booth se encuentra montado en su respectivo anvil y no puede desarmarse ni retirarse de su estructura.'],
+    items: [
     { id: 'cdj3000', qty: 2, name: 'Pioneer CDJ-3000', spec: 'Multi-player',
       photos: [['cdj-3000', 'Arriba'], ['cdj-3000-atras', 'Atrás'], ['cdj-3000-setup', 'Set up']] },
     { id: 'djma9', qty: 1, name: 'Mixer DJM A9', spec: 'Pioneer DJ · 4 canales', photos: [['djm-a9', 'Arriba'], ['djm-a9-atras', 'Atrás']] },
@@ -1019,6 +1035,7 @@ function renderList() {
           </li>`).join('')}
       </ul>
       </div>
+      ${sec.note ? `<p class="card-note"><span class="note-label mono">⚠ ${esc(sec.note[0])}</span><span class="note-text">${esc(sec.note[1])}</span></p>` : ''}
     </section>`).join('');
   cards = [...$('sections').children];
   layoutCards(true);
