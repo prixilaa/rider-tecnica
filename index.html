@@ -16,7 +16,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fraunces:opsz,wght@9..144,400..700&family=Bodoni+Moda:ital,opsz,wght@1,6..96,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 :root {
   /* Paleta La Nube: modo claro */
@@ -167,6 +167,8 @@ button { font: inherit; color: inherit; }
 .icon-btn svg { width: 18px; height: 18px; }
 .ic { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 #themeBtn .i-sun { display: none; }
+#themeBtn .moon-glyph { font-family: var(--serif); font-size: 21px; line-height: 1; translate: 0 -1px; }
+#themeBtn .sun-glyph { font-family: var(--sans); font-size: 19px; line-height: 1; }
 #themeBtn.is-dark .i-sun { display: block; }
 #themeBtn.is-dark .i-moon { display: none; }
 
@@ -265,9 +267,56 @@ button { font: inherit; color: inherit; }
 .item .ph svg { width: 13px; height: 13px; }
 .item.is-active .ph { border-color: transparent; background: var(--card); color: var(--ink); }
 
-.foot { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; max-width: 1180px; margin: 0 auto; padding: 24px var(--gutter) calc(32px + var(--safe-bottom)); color: var(--muted); font-size: 10.5px; }
-.foot .brand-cloud { width: 30px; height: 17px; }
-.foot span { display: inline-flex; align-items: center; gap: 10px; }
+/* Pie: copyright arriba y crédito centrado abajo. */
+.foot {
+  position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px;
+  max-width: 1180px; margin: 0 auto; padding: 96px var(--gutter) calc(40px + var(--safe-bottom));
+  color: var(--muted); font-size: 11px; line-height: 1.6; text-align: center; text-wrap: balance;
+  text-transform: none; letter-spacing: .02em;
+}
+.foot p { margin: 0; }
+.foot-sep { margin: 0 .5em; opacity: .6; }
+/* La línea de copyright va en la letra común: en la mono el 0 lleva un punto y parece un 8. */
+/* Se estira a lo ancho con espaciado entre letras, sin agrandar la letra. */
+.foot-copy { font-family: var(--sans); width: 100%; letter-spacing: .3em; text-wrap: wrap; }
+@media (max-width: 760px) { .foot-copy { letter-spacing: .1em; } }
+/* Crédito: itálica fina tipo Didot con un resplandor celeste en cruz detrás. */
+.foot-credit {
+  --name: var(--ink-2); --glow: rgba(147, 174, 230, .55);
+  position: relative; display: inline-block; padding: 10px 0;
+  font-family: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif; font-style: italic; font-weight: 400;
+  font-size: 17px; letter-spacing: .01em; line-height: 1.2; color: var(--name);
+}
+:root[data-theme="dark"] .foot-credit { --name: #f7f3ea; --glow: rgba(159, 186, 240, .4); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .foot-credit { --name: #f7f3ea; --glow: rgba(159, 186, 240, .4); } }
+.foot-name { position: relative; text-shadow: 0 0 12px var(--glow); }
+/* Destellos tipo "brillos" de Instagram: estrellas de 4 puntas (la vertical más larga) que aparecen
+   de a una sobre distintas letras, crecen, giran apenas y se apagan. Celestes con centro blanco. */
+.foot-spark {
+  --spark: var(--accent); position: absolute; z-index: 1; width: 0; height: 0; pointer-events: none;
+  opacity: 0; transform: scale(0); animation: foot-spark 3.2s ease-in-out infinite;
+}
+.foot-spark::before, .foot-spark::after {
+  content: ""; position: absolute; border-radius: 50%; filter: drop-shadow(0 0 3px var(--spark));
+}
+.foot-spark::before { left: -1.5px; top: -17px; width: 3px; height: 34px;
+  background: linear-gradient(to bottom, transparent, var(--spark) 32%, #fff 50%, var(--spark) 68%, transparent); }
+.foot-spark::after { left: -11px; top: -1.5px; width: 22px; height: 3px;
+  background: linear-gradient(to right, transparent, var(--spark) 30%, #fff 50%, var(--spark) 70%, transparent); }
+.foot-spark.k1 { left: 12%; top: 38%; }
+.foot-spark.k2 { left: 58%; top: 70%; animation-delay: .8s; }
+.foot-spark.k3 { left: 36%; top: 30%; animation-delay: 1.6s; }
+.foot-spark.k4 { left: 80%; top: 62%; animation-delay: 2.4s; }
+@keyframes foot-spark {
+  0% { opacity: 0; transform: scale(0) rotate(-12deg); }
+  12% { opacity: 1; transform: scale(1) rotate(0deg); }
+  20% { opacity: .85; transform: scale(.75) rotate(6deg); }
+  30%, 100% { opacity: 0; transform: scale(0) rotate(12deg); }
+}
+@media (prefers-reduced-motion: reduce) { .foot-spark { animation: none; } }
+/* La @ de la Bodoni itálica es muy grande y adornada: va en la letra común, más chica y derecha. */
+.foot-at { font-family: var(--sans); font-style: normal; font-weight: 400; font-size: .72em; margin: 0 .08em 0 .12em; vertical-align: .08em; opacity: .85; }
+.foot-heart { font-family: var(--sans); font-style: normal; font-size: 1em; color: var(--accent-strong); margin-left: .2em; }
 
 /* ---------- Preview flotante ---------- */
 .pv { position: fixed; left: 0; top: 0; z-index: 40; width: 292px; pointer-events: none; will-change: transform; }
@@ -476,8 +525,8 @@ button { font: inherit; color: inherit; }
   </a>
   <div class="topbar-right">
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Cambiar a modo oscuro">
-      <svg class="ic i-moon" aria-hidden="true"><use href="#i-moon"/></svg>
-      <svg class="ic i-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+      <span class="i-moon moon-glyph" aria-hidden="true">☾&#xFE0E;</span>
+      <span class="i-sun sun-glyph" aria-hidden="true">✴&#xFE0E;</span>
     </button>
   </div>
 </header>
@@ -500,7 +549,7 @@ button { font: inherit; color: inherit; }
           <svg class="ic i-check" aria-hidden="true"><use href="#i-check"/></svg>
           <span id="copyLabel">Copiar lista completa</span>
         </button>
-        <span class="pill mono" id="statItems">53 equipos</span>
+        <span class="pill mono" id="statItems">57 equipos</span>
       </div>
     </div>
   </section>
@@ -570,8 +619,43 @@ button { font: inherit; color: inherit; }
       <ul class="items">
           <li class="item has-photo" data-id="rcf-15" tabindex="0" role="button" aria-label="2 Speakers RCF 15&quot;, Driver 1&quot; · 600 watts x parlante. Ver fotos">
             <span class="qty">2<small>×</small></span>
-            <span class="body"><span class="name">Speakers RCF 15"</span><span class="spec mono">Driver 1&quot; · 600 watts x parlante</span></span>
+            <span class="body"><span class="name">Speakers RCF 15"</span><span class="spec mono">Driver 1" · 600 watts x parlante</span></span>
             <span class="ph mono"><svg class="ic" aria-hidden="true"><use href="#i-image"></use></svg><span>2</span></span>
+          </li>
+          <li class="item has-photo" data-id="gx5" tabindex="0" role="button" aria-label="1 Potencia QSC GX5, Amplificador de potencia. Ver fotos">
+            <span class="qty">1<small>×</small></span>
+            <span class="body"><span class="name">Potencia QSC GX5</span><span class="spec mono">Amplificador de potencia</span></span>
+            <span class="ph mono"><svg class="ic" aria-hidden="true"><use href="#i-image"></use></svg><span>3</span></span>
+          </li>
+      </ul>
+      </div>
+    </section>
+<section class="card" id="sec-microfonos" aria-labelledby="h-microfonos">
+      <header class="card-head">
+        <svg class="sc" aria-hidden="true"><use href="#cloud"></use></svg>
+        <h2 id="h-microfonos">Micrófonos</h2>
+      </header>
+      <div class="card-box">
+      <p class="sub mono">Voces</p>
+      <ul class="items">
+          <li class="item" data-id="sm58">
+            <span class="qty">2<small>×</small></span>
+            <span class="body"><span class="name">Shure SM58</span><span class="spec mono">Micrófono dinámico</span></span>
+          </li>
+      </ul>
+      </div>
+    </section>
+<section class="card" id="sec-accesorios" aria-labelledby="h-accesorios">
+      <header class="card-head">
+        <svg class="sc" aria-hidden="true"><use href="#cloud"></use></svg>
+        <h2 id="h-accesorios">Accesorios</h2>
+      </header>
+      <div class="card-box">
+      <p class="sub mono">Escenario</p>
+      <ul class="items">
+          <li class="item" data-id="pie-mic">
+            <span class="qty">2<small>×</small></span>
+            <span class="body"><span class="name">Pies de Mics</span></span>
           </li>
       </ul>
       </div>
@@ -598,11 +682,6 @@ button { font: inherit; color: inherit; }
             <span class="qty">1<small>×</small></span>
             <span class="body"><span class="name">Crossover Rane AC-23</span><span class="spec mono">Crossover activo</span></span>
             <span class="ph mono"><svg class="ic" aria-hidden="true"><use href="#i-image"></use></svg><span>2</span></span>
-          </li>
-          <li class="item has-photo" data-id="gx5" tabindex="0" role="button" aria-label="1 Potencia QSC GX5, Amplificador de potencia. Ver fotos">
-            <span class="qty">1<small>×</small></span>
-            <span class="body"><span class="name">Potencia QSC GX5</span><span class="spec mono">Amplificador de potencia</span></span>
-            <span class="ph mono"><svg class="ic" aria-hidden="true"><use href="#i-image"></use></svg><span>3</span></span>
           </li>
           <li class="item has-photo" data-id="dm3" tabindex="0" role="button" aria-label="1 Consola Yamaha DM3, Consola digital. Ver fotos">
             <span class="qty">1<small>×</small></span>
@@ -689,8 +768,8 @@ button { font: inherit; color: inherit; }
 </main>
 
 <footer class="foot mono">
-  <span><svg class="brand-cloud" aria-hidden="true"><use href="#cloud"/></svg>La Nube · Rider técnico</span>
-  <span id="footCount">23 modelos · 53 equipos</span>
+  <p class="foot-copy">Copyright TECNICAMOE <span class="foot-sep">|</span> LaNube&nbsp;2026&nbsp;· Todos los derechos reservados.</p>
+  <p class="foot-credit"><span class="foot-spark k1" aria-hidden="true"></span><span class="foot-spark k2" aria-hidden="true"></span><span class="foot-spark k3" aria-hidden="true"></span><span class="foot-spark k4" aria-hidden="true"></span><span class="foot-name">creado x <span class="foot-at">@</span>srisrial</span> <span class="foot-heart" aria-hidden="true">♡</span></p>
 </footer>
 
 <!-- Preview flotante -->
@@ -774,14 +853,20 @@ const SECTIONS = [
   ]},
   { id: 'ambiente', col: 1, title: 'Ambiente adicional', sub: 'Refuerzo de sala', items: [
     { id: 'rcf-15', qty: 2, name: 'Speakers RCF 15"', spec: 'Driver 1" · 600 watts x parlante', photos: [['rcf-15', 'Frente'], ['rcf-15-atras', 'Atrás']] },
+    { id: 'gx5', qty: 1, name: 'Potencia QSC GX5', spec: 'Amplificador de potencia',
+      photos: [['qsc-gx5-frente', 'Frente'], ['qsc-gx5-atras', 'Atrás'], ['qsc-gx5-lado', 'Lateral']] },
+  ]},
+  { id: 'microfonos', col: 1, title: 'Micrófonos', sub: 'Voces', items: [
+    { id: 'sm58', qty: 2, name: 'Shure SM58', spec: 'Micrófono dinámico', photos: [] },
+  ]},
+  { id: 'accesorios', col: 1, title: 'Accesorios', sub: 'Escenario', items: [
+    { id: 'pie-mic', qty: 2, name: 'Pies de Mics', photos: [] },
   ]},
   { id: 'amplificacion', col: 0, title: 'Amplificación y control', sub: 'Rack y mezcla', items: [
     { id: 'ca6', qty: 1, name: 'Crest CA6', spec: 'Amplificador de potencia', photos: [['crest-ca6', 'Frente'], ['crest-ca6-atras', 'Atrás']] },
     { id: 'ca4', qty: 1, name: 'Crest CA4', spec: 'Amplificador de potencia', photos: [['crest-ca4', 'Frente'], ['crest-ca4-atras', 'Atrás']] },
     { id: 'rane', qty: 1, name: 'Crossover Rane AC-23', spec: 'Crossover activo',
       photos: [['rane-ac23-frente', 'Frente'], ['rane-ac23-atras', 'Atrás']] },
-    { id: 'gx5', qty: 1, name: 'Potencia QSC GX5', spec: 'Amplificador de potencia',
-      photos: [['qsc-gx5-frente', 'Frente'], ['qsc-gx5-atras', 'Atrás'], ['qsc-gx5-lado', 'Lateral']] },
     { id: 'dm3', qty: 1, name: 'Consola Yamaha DM3', spec: 'Consola digital',
       photos: [['yamaha-dm3', 'Frente'], ['yamaha-dm3-lado', 'Lateral'], ['yamaha-dm3-atras', 'Atrás']] },
   ]},
@@ -940,7 +1025,6 @@ function renderList() {
 
   const units = SECTIONS.reduce((n, s) => n + s.items.reduce((m, it) => m + it.qty, 0), 0);
   $('statItems').textContent = `${units} equipos`;
-  $('footCount').textContent = `${ITEMS.size} modelos · ${units} equipos`;
 }
 renderList();
 const rowOf = (id) => document.querySelector(`.item[data-id="${id}"]`);
